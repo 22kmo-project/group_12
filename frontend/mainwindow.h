@@ -1,5 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include "mainmenuwindow.h"
 
 #include <QMainWindow>
 
@@ -15,7 +16,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_btn_login_clicked();
+
 private:
     Ui::MainWindow *ui;
+    Mainmenuwindow *objectMainMenu;
 };
 #endif // MAINWINDOW_H

@@ -1,0 +1,33 @@
+#ifndef WITHDRAWALWINDOW_H
+#define WITHDRAWALWINDOW_H
+
+#include <QWidget>
+
+namespace Ui {
+class withdrawalwindow;
+}
+
+class withdrawalwindow : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit withdrawalwindow(QWidget *parent = nullptr);
+    ~withdrawalwindow();
+
+private slots:
+    void on_btn20_clicked();
+
+    void on_btn40_clicked();
+
+    void on_btn50_clicked();
+
+    void on_btn100_clicked();
+
+
+
+private:
+    Ui::withdrawalwindow *ui;
+};
+
+#endif // WITHDRAWALWINDOW_H
