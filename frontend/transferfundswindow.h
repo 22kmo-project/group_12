@@ -18,6 +18,8 @@ public:
 private slots:
     void on_btnCloseTransfer_clicked();
 
+    void on_btnTransferOK_clicked();
+
 private:
     Ui::transferfundswindow *ui;
 };
