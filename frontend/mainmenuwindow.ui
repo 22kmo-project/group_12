@@ -23,15 +23,6 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QLineEdit" name="text_show_id">
-      <property name="font">
-       <font>
-        <pointsize>25</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1" rowspan="6">
      <widget class="QTextEdit" name="text_infobox"/>
     </item>
@@ -92,6 +83,15 @@
       </property>
       <property name="text">
        <string>Log out</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="font">
+       <font>
+        <pointsize>25</pointsize>
+       </font>
       </property>
      </widget>
     </item>
