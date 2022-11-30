@@ -10,6 +10,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    delete ui;    
+}
+
+
+void MainWindow::on_btn_login_clicked()
+{
+    objectMainMenu = new Mainmenuwindow;
+    objectMainMenu->show();
+    //tänne valinta avataanko main menu-ikkuna vai credit/debit-ikkuna
 }
 
