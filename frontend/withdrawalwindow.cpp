@@ -43,9 +43,11 @@ void withdrawalwindow::on_btn500_clicked()
 {
 
 }
+void withdrawalwindow::on_btnAmountOK_clicked()
+{
 
+}
 void withdrawalwindow::on_btnCloseWithdrawal_clicked()
 {
     this->close();
 }
-
