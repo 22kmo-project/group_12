@@ -30,8 +30,6 @@ private slots:
 
     void on_btnCloseWithdrawal_clicked();
 
-    void on_btnOK_clicked();
-
     void on_btnAmountOK_clicked();
 
 private:
