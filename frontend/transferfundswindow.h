@@ -15,6 +15,9 @@ public:
     explicit transferfundswindow(QWidget *parent = nullptr);
     ~transferfundswindow();
 
+private slots:
+    void on_btnCloseTransfer_clicked();
+
 private:
     Ui::transferfundswindow *ui;
 };

@@ -24,16 +24,28 @@ void withdrawalwindow::on_btn40_clicked()
 
 }
 
-
-void withdrawalwindow::on_btn50_clicked()
+void withdrawalwindow::on_btn60_clicked()
 {
 
 }
-
 
 void withdrawalwindow::on_btn100_clicked()
 {
 
 }
 
+void withdrawalwindow::on_btn200_clicked()
+{
+
+}
+
+void withdrawalwindow::on_btn500_clicked()
+{
+
+}
+
+void withdrawalwindow::on_btnCloseWithdrawal_clicked()
+{
+    this->close();
+}
 

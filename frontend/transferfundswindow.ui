@@ -16,31 +16,50 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>200</x>
+     <x>170</x>
      <y>140</y>
-     <width>419</width>
-     <height>181</height>
+     <width>481</width>
+     <height>251</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
-     <widget class="QLabel" name="label">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <pointsize>25</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Enter the amount of transfer:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="font">
+         <font>
+          <pointsize>25</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="btnCloseTransfer">
       <property name="font">
        <font>
         <pointsize>25</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>Enter the amount of transfer:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="font">
-       <font>
-        <pointsize>25</pointsize>
-       </font>
+       <string>Close</string>
       </property>
      </widget>
     </item>

@@ -12,3 +12,9 @@ transferfundswindow::~transferfundswindow()
 {
     delete ui;
 }
+
+void transferfundswindow::on_btnCloseTransfer_clicked()
+{
+    this->close();
+}
+

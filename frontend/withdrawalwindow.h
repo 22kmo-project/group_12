@@ -20,11 +20,15 @@ private slots:
 
     void on_btn40_clicked();
 
-    void on_btn50_clicked();
+    void on_btn60_clicked();
 
     void on_btn100_clicked();
 
+    void on_btn200_clicked();
 
+    void on_btn500_clicked();
+
+    void on_btnCloseWithdrawal_clicked();
 
 private:
     Ui::withdrawalwindow *ui;
