@@ -6,8 +6,13 @@ const jwt = require('jsonwebtoken');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var cardRouter = require('./routes/card');
 var loginRouter = require('./routes/login');
+
+
+var cardRouter = require('./routes/card');
+var cardAccessRouter = require('./routes/card_access');
+var transactionsRouter = require('./routes/transactions');
+var accesslistRouter = require('./routes/accesslist');
 
 var app = express();
 
@@ -24,6 +29,9 @@ app.use(authenticateToken); //kaikki endpointit tämän alla ovat suojattuja, va
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/card', cardRouter);
+app.use('/transactions', transactionsRouter);
+app.use('/card_access', cardAccessRouter);
+app.use('/accesslist', accesslistRouter);
 
 function authenticateToken(req, res, next) {   
     const authHeader = req.headers['authorization']
