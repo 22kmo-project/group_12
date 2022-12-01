@@ -9,9 +9,9 @@ const card = {
   },
   add: function(add_data, callback) {
     return db.query(
-      'insert into card (card_owner,expired,pincode,debit,credit,locked_pin) values(?,?,?,?,?,?)',
-      [add_data.card_owner, add_data.expired, add_data.pincode, add_data.debit, add_data.credit,
-         add_data.locked_pin],
+      'insert into card (card_owner,expiry_date,pincode,debit,credit,locked_pin) values(?,?,?,?,?,?)',
+      [add_data.card_owner, add_data.expiry_date, add_data.pincode, Boolean(add_data.debit == 1), Boolean(add_data.credit == 1),
+         Boolean(add_data.locked_pin == 1)],
       callback);
   },
   delete: function(id, callback) {
@@ -19,9 +19,9 @@ const card = {
   },
   update: function(id, update_data, callback) {
     return db.query(
-      'update card set card_owner=?,expired=?, pincode=?, debit=?, credit=?, locked_pin=? where card_number=?',
-      [update_data.card_owner, update_data.expired, update_data.pincode, update_data.debit, update_data.credit, 
-        update_data.locked_pin, id],
+      'update card set card_owner=?,expiry_date=?, pincode=?, debit=?, credit=?, locked_pin=? where card_number=?',
+      [update_data.card_owner, update_data.expiry_date, update_data.pincode, Boolean(update_data.debit == 1), Boolean(update_data.credit == 1), 
+        Boolean(update_data.locked_pin == 1), id],
       callback);
   }
 };
