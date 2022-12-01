@@ -11,7 +11,7 @@ const card = {
     return db.query('select * from card', callback);
   },
   add: function (add_data, callback) {
-    bcrypt.hash(add_data.pincode, saltRounds, function (err, hashedPassword) { //kryptattu pincode tietokantaan
+    bcrypt.hash(add_data.pincode, saltRounds, function(err, hashedPassword) { //kryptattu pincode tietokantaan
       return db.query(
         'insert into card (card_owner,expiry_date,pincode,debit,credit,locked_pin) values(?,?,?,?,?,?)',
         [add_data.card_owner, add_data.expiry_date, hashedPassword, Boolean(add_data.debit == 1), Boolean(add_data.credit == 1),
@@ -30,6 +30,9 @@ const card = {
         Boolean(update_data.locked_pin == 1), id],
         callback);
     });
-  }
+  },
+  checkPassword: function(card_number,callback){  //EI TESTATTU
+    return db.query('SELECT pincode FROM card WHERE card_number=?',[card_number],callback);
+},
 };
 module.exports = card;
