@@ -37,15 +37,20 @@ void MainWindow::loginSlot(QNetworkReply *reply)  //tämä käsittelee vastaukse
 {
     response_data = reply->readAll();
     qDebug() << response_data;
-    /*if(card_number.length()==4){
-        objectMainMenu = new Mainmenuwindow(card_number);
-        objectMainMenu->show();
-        }
-    else{
+
+    int test=QString::compare(response_data, "false");
+    qDebug() << test;
+
+    if(test==0){
         ui->text_id->clear();
         ui->text_PIN->clear();
         ui->label_infobox->setText("Ei natsannut");
-    }*/
+        }
+    else{
+        objectMainMenu = new Mainmenuwindow(card_number);
+        objectMainMenu->setWebToken(response_data); //käytetään setteriä ja getteriä tallentamaan webtoken ja viedään uuteen ikkunaan
+        objectMainMenu->show();
+    }
 
 }
 

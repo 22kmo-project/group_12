@@ -38,6 +38,8 @@ void Mainmenuwindow::on_btnCheckBalance_clicked()
 
 void Mainmenuwindow::on_btnTransactions_clicked()
 {
+    QString wb=this->getWebToken();
+    qDebug()<<wb;
     //tilin omistajan tiedot, 10 viimeistä tilitapahtumaa
 }
 
@@ -45,5 +47,15 @@ void Mainmenuwindow::on_btnTransactions_clicked()
 void Mainmenuwindow::on_btnLogOut_clicked()
 {
     this->close();
+}
+
+const QString &Mainmenuwindow::getWebToken() const
+{
+    return webToken;
+}
+
+void Mainmenuwindow::setWebToken(const QString &newWebToken)
+{
+    webToken = newWebToken;
 }
 
