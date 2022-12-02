@@ -15,7 +15,7 @@ class Mainmenuwindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit Mainmenuwindow(QWidget *parent = nullptr);
+    explicit Mainmenuwindow(QString card_number, QWidget *parent = nullptr);  //tuodaan card_number mainWindowista
     ~Mainmenuwindow();
 
 private slots:

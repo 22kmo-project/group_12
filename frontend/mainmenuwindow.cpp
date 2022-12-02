@@ -1,11 +1,12 @@
 #include "mainmenuwindow.h"
 #include "ui_mainmenuwindow.h"
 
-Mainmenuwindow::Mainmenuwindow(QWidget *parent) :
+Mainmenuwindow::Mainmenuwindow(QString card_number, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Mainmenuwindow)
 {
     ui->setupUi(this);
+    ui->lineEdit->setText(card_number);  //tulostetaan card_number mainmenussa näkyviin
 }
 
 Mainmenuwindow::~Mainmenuwindow()
