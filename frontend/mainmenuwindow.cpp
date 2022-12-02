@@ -1,11 +1,12 @@
 #include "mainmenuwindow.h"
 #include "ui_mainmenuwindow.h"
 
-Mainmenuwindow::Mainmenuwindow(QWidget *parent) :
+Mainmenuwindow::Mainmenuwindow(QString card_number, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Mainmenuwindow)
 {
     ui->setupUi(this);
+    ui->lineEdit->setText(card_number);  //tulostetaan card_number mainmenussa näkyviin
 }
 
 Mainmenuwindow::~Mainmenuwindow()
@@ -36,7 +37,7 @@ void Mainmenuwindow::on_btnCheckBalance_clicked()
 
 
 void Mainmenuwindow::on_btnTransactions_clicked()
-{
+{    
     //tilin omistajan tiedot, 10 viimeistä tilitapahtumaa
 }
 
@@ -45,4 +46,5 @@ void Mainmenuwindow::on_btnLogOut_clicked()
 {
     this->close();
 }
+
 
