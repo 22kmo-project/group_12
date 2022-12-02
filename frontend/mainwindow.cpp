@@ -44,11 +44,10 @@ void MainWindow::loginSlot(QNetworkReply *reply)  //tämä käsittelee vastaukse
     if(test==0){
         ui->text_id->clear();
         ui->text_PIN->clear();
-        ui->label_infobox->setText("Ei natsannut");
+        ui->label_infobox->setText("Tunnus ja salasana eivät täsmää");
         }
     else{
         objectMainMenu = new Mainmenuwindow(card_number);
-        objectMainMenu->setWebToken(response_data); //käytetään setteriä ja getteriä tallentamaan webtoken ja viedään uuteen ikkunaan
         objectMainMenu->show();
     }
 
