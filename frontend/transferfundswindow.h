@@ -22,6 +22,9 @@ private slots:
 
 private:
     Ui::transferfundswindow *ui;
+
+signals:
+    void closeClicked();
 };
 
 #endif // TRANSFERFUNDSWINDOW_H

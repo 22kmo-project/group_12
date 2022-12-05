@@ -9,24 +9,41 @@ Mainmenuwindow::Mainmenuwindow(QString card_number, QWidget *parent) :
     ui->lineEdit->setText(card_number);  //tulostetaan card_number mainmenussa näkyviin
 }
 
+Mainmenuwindow::Mainmenuwindow(QWidget *parent):
+    QWidget(parent),
+    ui(new Ui::Mainmenuwindow)
+{
+    ui->setupUi(this);
+}
+
 Mainmenuwindow::~Mainmenuwindow()
 {
     delete ui;
-    delete objectWithdrawal;
-    objectWithdrawal = nullptr;
+//    delete objectWithdrawal;
+//    objectWithdrawal = nullptr;
+}
+
+//const QString &Mainmenuwindow::getWebToken() const
+//{
+
+//}
+
+void Mainmenuwindow::setWebToken(QByteArray &newWebToken)
+{
+    webToken = newWebToken;
 }
 
 void Mainmenuwindow::on_btnWithdrawal_clicked()
 {
-    objectWithdrawal = new withdrawalwindow;
-    objectWithdrawal->show();
+
+    emit withdrawalClicked();
 }
 
 
 void Mainmenuwindow::on_btnTransferFunds_clicked()
 {
-    objectTransferFunds = new transferfundswindow;
-    objectTransferFunds->show();
+
+    emit transferFundsClicked();
 }
 
 
@@ -39,12 +56,15 @@ void Mainmenuwindow::on_btnCheckBalance_clicked()
 void Mainmenuwindow::on_btnTransactions_clicked()
 {    
     //tilin omistajan tiedot, 10 viimeistä tilitapahtumaa
+
 }
 
 
 void Mainmenuwindow::on_btnLogOut_clicked()
 {
-    this->close();
+
+    emit logOutClicked();
+
 }
 
 
