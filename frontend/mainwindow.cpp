@@ -41,15 +41,22 @@ void MainWindow::loginSlot(QNetworkReply *reply)  //tämä käsittelee vastaukse
     int test=QString::compare(response_data, "false");
     qDebug() << test;
 
-    if(test==0){
-        ui->text_id->clear();
-        ui->text_PIN->clear();
-        ui->label_infobox->setText("Tunnus ja salasana eivät täsmää");
-        }
-    else{
-        objectMainMenu = new Mainmenuwindow(card_number);
-        objectMainMenu->show();
+    if(response_data.length()==0){
+        ui->label_infobox->setText("Palvelin ei vastaa");
     }
+    else{
+        if(test==0){
+            ui->text_id->clear();
+            ui->text_PIN->clear();
+            ui->label_infobox->setText("Tunnus ja salasana eivät täsmää");
+            }
+        else{
+            objectMainMenu = new Mainmenuwindow(card_number);
+            objectMainMenu->show();
+        }
+    }
+
+
 
 }
 
