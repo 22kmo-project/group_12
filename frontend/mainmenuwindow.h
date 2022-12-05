@@ -1,8 +1,8 @@
 #ifndef MAINMENUWINDOW_H
 #define MAINMENUWINDOW_H
 
-#include "withdrawalwindow.h"
-#include "transferfundswindow.h"
+#include "qbitarray.h"
+
 
 #include <QWidget>
 #include <QDebug>   //??????
@@ -17,27 +17,30 @@ class Mainmenuwindow : public QWidget
 
 public:
     explicit Mainmenuwindow(QString card_number, QWidget *parent = nullptr);  //tuodaan card_number mainWindowista
+    Mainmenuwindow(QWidget *parent = nullptr);
     ~Mainmenuwindow();
 
-    const QString &getWebToken() const;
-    void setWebToken(const QString &newWebToken);
+//    const QString &getWebToken() const;
+    void setWebToken(QByteArray &newWebToken);
 
 private slots:
     void on_btnWithdrawal_clicked();
-
     void on_btnTransferFunds_clicked();
-
     void on_btnCheckBalance_clicked();
-
     void on_btnTransactions_clicked();
-
     void on_btnLogOut_clicked();
 
 private:
     Ui::Mainmenuwindow *ui;
-    withdrawalwindow *objectWithdrawal;
-    transferfundswindow *objectTransferFunds;
-    QString webToken;
+    //withdrawalwindow *objectWithdrawal;
+    //transferfundswindow *objectTransferFunds;
+    QByteArray webToken;
+
+signals:
+    void logOutClicked();
+    void withdrawalClicked();
+    void transferFundsClicked();
+
 
 };
 

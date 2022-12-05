@@ -34,6 +34,9 @@ private slots:
 
 private:
     Ui::withdrawalwindow *ui;
+
+signals:
+    void closeClicked();
 };
 
 #endif // WITHDRAWALWINDOW_H

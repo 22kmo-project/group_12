@@ -1,11 +1,27 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "qstackedwidget.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // Widgettien lisäys
+    ui->stackedWidget->insertWidget(1, &objectMainMenu);
+    ui->stackedWidget->insertWidget(2, &objectTransferMenu);
+    ui->stackedWidget->insertWidget(3, &objectWithdrawMenu);
+//    ui->stackedWidget->insertWidget(4, &objectCreditDebitMenu);
+
+    // Navigaationappien signaalit
+    connect(&objectMainMenu, SIGNAL(logOutClicked()), this, SLOT(logOut()));
+    connect(&objectMainMenu, SIGNAL(withdrawalClicked()), this, SLOT(moveToWithdrawal()));
+    connect(&objectMainMenu, SIGNAL(transferFundsClicked()), this, SLOT(moveToTransferFunds()));
+    connect(&objectWithdrawMenu, SIGNAL(closeClicked()), this, SLOT(moveToMenu()));
+    connect(&objectTransferMenu, SIGNAL(closeClicked()), this, SLOT(moveToMenu()));
+
+
 }
 
 MainWindow::~MainWindow()
@@ -28,13 +44,14 @@ void MainWindow::on_btn_login_clicked()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     loginManager = new QNetworkAccessManager(this);
-    connect(loginManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
+    connect(loginManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
 
     reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
 void MainWindow::loginSlot(QNetworkReply *reply)  //tämä käsittelee vastauksen, saadaan tuo *reply
 {
+
     response_data = reply->readAll();
     qDebug() << response_data;
 
@@ -46,17 +63,50 @@ void MainWindow::loginSlot(QNetworkReply *reply)  //tämä käsittelee vastaukse
     }
     else{
         if(test==0){
-            ui->text_id->clear();
-            ui->text_PIN->clear();
+            clearFields();
             ui->label_infobox->setText("Tunnus ja salasana eivät täsmää");
             }
         else{
-            objectMainMenu = new Mainmenuwindow(card_number);
-            objectMainMenu->show();
+            //objectMainMenu = new Mainmenuwindow(card_number);
+            objectMainMenu.setWebToken(response_data);
+            //objectMainMenu.show();
+            moveToMenu();
         }
+        clearFields();
     }
 
 
 
+}
+
+void MainWindow::logOut()
+{
+    // Login screeniin siirtyminen
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::moveToMenu()
+{
+    // Päänäkymään/menuun siirtyminen
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::moveToWithdrawal()
+{
+    // Withdrawal-ikkunaan siirtyminen
+    ui->stackedWidget->setCurrentIndex(3);
+}
+
+void MainWindow::moveToTransferFunds()
+{
+    // transferfunds näkymään siirtyminen
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::clearFields()
+{
+    // Käyttäjä ja salasana kentän tyhjennys
+    ui->text_id->clear();
+    ui->text_PIN->clear();
 }
 
