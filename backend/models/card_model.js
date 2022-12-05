@@ -31,8 +31,11 @@ const card = {
         callback);
     });
   },
-  checkPassword: function(card_number,callback){  //EI TESTATTU
+  checkPassword: function(card_number,callback){ 
     return db.query('SELECT pincode FROM card WHERE card_number=?',[card_number],callback);
+},
+  debitOrCreditcheck: function (id, callback) {
+    return db.query('select debit, credit, locked_pin FROM card WHERE card_number=?', [id], callback);
 },
 };
 module.exports = card;

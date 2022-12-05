@@ -24,8 +24,6 @@ router.post('/',
                   response.send(token);   
                 }
                 else {
-                    console.log(card_id);  //TESTI
-                    console.log(pin)
                     console.log("wrong password");
                     response.send(false);
                 }			
