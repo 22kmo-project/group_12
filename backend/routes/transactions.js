@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const transactions = require('../models/transactions_model');  //täältä muokattiin vaan sana transactions
+const transactions = require('../models/transactions_model');
 
 router.get('/:id?',
  function(request, response) {
