@@ -18,6 +18,5 @@ void transferfundswindow::on_btnTransferOK_clicked()
 }
 void transferfundswindow::on_btnCloseTransfer_clicked()
 {
-    //this->close();
     emit closeClicked();
 }
