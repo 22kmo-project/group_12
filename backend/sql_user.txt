@@ -1,0 +1,2 @@
+CREATE USER 'banksimulatm'@'localhost' IDENTIFIED WITH mysql_native_password BY 'ATM12';
+GRANT ALL on banksimuldb_exp.* to 'banksimulatm'@'localhost';
