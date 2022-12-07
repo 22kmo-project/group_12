@@ -35,7 +35,6 @@ private slots:
 
 private:
     Ui::withdrawalwindow *ui;
-    int nostettava = 0;
 
 
 signals:
