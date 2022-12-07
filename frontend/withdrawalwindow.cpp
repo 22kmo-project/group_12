@@ -15,7 +15,7 @@ withdrawalwindow::~withdrawalwindow()
 
 void withdrawalwindow::on_btn20_clicked()
 {
-
+    ui->lineEdit->setText("20");
 }
 
 
@@ -46,6 +46,8 @@ void withdrawalwindow::on_btn500_clicked()
 void withdrawalwindow::on_btnAmountOK_clicked()
 {
  // PUT PUT
+
+
 }
 void withdrawalwindow::on_btnCloseWithdrawal_clicked()
 {

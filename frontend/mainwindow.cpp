@@ -22,11 +22,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&objectTransferMenu, SIGNAL(closeClicked()), this, SLOT(moveToMenu()));
 
 
+
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;    
+    delete ui;
+//    delete netManager;
+//    netManager = nullptr;
+//    delete reply;
+//    reply = nullptr;
 }
 
 
@@ -43,10 +48,10 @@ void MainWindow::on_btn_login_clicked()
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    loginManager = new QNetworkAccessManager(this);
-    connect(loginManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
+    netManager = new QNetworkAccessManager(this);
+    connect(netManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
 
-    reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
+    reply = netManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
 void MainWindow::loginSlot(QNetworkReply *reply)  //tämä käsittelee vastauksen, saadaan tuo *reply
@@ -58,24 +63,18 @@ void MainWindow::loginSlot(QNetworkReply *reply)  //tämä käsittelee vastaukse
     int test=QString::compare(response_data, "false");
     qDebug() << test;
 
-    if(response_data.length()==0){
-        ui->label_infobox->setText("Palvelin ei vastaa");
+    if(test == -1 && response_data.length() > 0){
+        objectMainMenu.setWebToken(response_data);
+        moveToMenu();
+        clearFields();
+
+    }else if(test == 0){
+        clearFields();
+        ui->label_infobox->setText("Tunnus ja salasana eivät täsmää");
     }
     else{
-        if(test==0){
-            clearFields();
-            ui->label_infobox->setText("Tunnus ja salasana eivät täsmää");
-            }
-        else{
-            //objectMainMenu = new Mainmenuwindow(card_number);
-            objectMainMenu.setWebToken(response_data);
-            //objectMainMenu.show();
-            moveToMenu();
-        }
-        clearFields();
+        ui->label_infobox->setText("Palvelin ei vastaa");
     }
-
-
 
 }
 
@@ -95,6 +94,7 @@ void MainWindow::moveToWithdrawal()
 {
     // Withdrawal-ikkunaan siirtyminen
     ui->stackedWidget->setCurrentIndex(3);
+
 }
 
 void MainWindow::moveToTransferFunds()
@@ -106,7 +106,20 @@ void MainWindow::moveToTransferFunds()
 void MainWindow::clearFields()
 {
     // Käyttäjä ja salasana kentän tyhjennys
+    ui->label_infobox->clear();
     ui->text_id->clear();
     ui->text_PIN->clear();
+}
+
+void MainWindow::netRequest(QString siteurl)
+{
+    // WebToken alku
+    QNetworkRequest request((siteurl));
+    request.setRawHeader(QByteArray("Authorization"),("Bearer "+objectMainMenu.getWebToken()));
+    // WebToken loppu
+    netManager = new QNetworkAccessManager(this);
+    connect(netManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(getBookSlot(QNetworkReply*)));
+
+    reply = netManager->get(request);
 }
 

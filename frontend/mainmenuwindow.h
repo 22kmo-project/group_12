@@ -22,6 +22,7 @@ public:
 
 //    const QString &getWebToken() const;
     void setWebToken(QByteArray &newWebToken);
+    QByteArray getWebToken();
 
 private slots:
     void on_btnWithdrawal_clicked();
@@ -32,8 +33,7 @@ private slots:
 
 private:
     Ui::Mainmenuwindow *ui;
-    //withdrawalwindow *objectWithdrawal;
-    //transferfundswindow *objectTransferFunds;
+
     QByteArray webToken;
 
 signals:
