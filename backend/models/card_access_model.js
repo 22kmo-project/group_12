@@ -2,7 +2,7 @@ const db = require('../database');
 
 const card_access = {
   getById: function(id, callback) {
-    return db.query('select * from card_access where idcard_access=?', [id], callback);
+    return db.query('select account_number from card_access where card_number=?', [id], callback);
   },
   getAll: function(callback) {
     return db.query('select * from card_access', callback);

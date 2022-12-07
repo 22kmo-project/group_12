@@ -92,6 +92,7 @@ void MainWindow::moveToMenu()
 
 void MainWindow::moveToWithdrawal()
 {
+    objectWithdrawMenu.cardNumber = card_number;
     // Withdrawal-ikkunaan siirtyminen
     ui->stackedWidget->setCurrentIndex(3);
 
