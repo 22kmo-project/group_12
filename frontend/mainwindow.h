@@ -31,6 +31,7 @@ private slots:
     void moveToMenu();
     void moveToWithdrawal();
     void moveToTransferFunds();
+    void netRequest(QString url);
 
 private:
     Ui::MainWindow *ui;
@@ -39,7 +40,7 @@ private:
     withdrawalwindow objectWithdrawMenu;
     creditOrDebitWindow objectCreditDebitMenu;
 
-    QNetworkAccessManager *loginManager;
+    QNetworkAccessManager *netManager;
     QNetworkReply *reply;
     QByteArray response_data;
     QString card_number;

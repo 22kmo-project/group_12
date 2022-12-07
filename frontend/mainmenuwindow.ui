@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>Mainmenuwindow</class>
  <widget class="QWidget" name="Mainmenuwindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,7 +16,7 @@
   <property name="windowTitle">
    <string>Main Menu</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>120</x>
@@ -40,6 +43,9 @@
     </item>
     <item row="2" column="0">
      <widget class="QPushButton" name="btnTransferFunds">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="font">
        <font>
         <pointsize>25</pointsize>

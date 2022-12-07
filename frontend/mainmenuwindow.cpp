@@ -33,10 +33,16 @@ void Mainmenuwindow::setWebToken(QByteArray &newWebToken)
     webToken = newWebToken;
 }
 
+QByteArray Mainmenuwindow::getWebToken()
+{
+    return webToken;
+}
+
 void Mainmenuwindow::on_btnWithdrawal_clicked()
 {
 
     emit withdrawalClicked();
+
 }
 
 
@@ -44,6 +50,7 @@ void Mainmenuwindow::on_btnTransferFunds_clicked()
 {
 
     emit transferFundsClicked();
+    ui->btnTransferFunds->setEnabled(false);
 }
 
 

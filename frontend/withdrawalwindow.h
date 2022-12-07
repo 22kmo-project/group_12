@@ -15,6 +15,7 @@ public:
     explicit withdrawalwindow(QWidget *parent = nullptr);
     ~withdrawalwindow();
 
+
 private slots:
     void on_btn20_clicked();
 
@@ -34,6 +35,7 @@ private slots:
 
 private:
     Ui::withdrawalwindow *ui;
+
 
 signals:
     void closeClicked();
