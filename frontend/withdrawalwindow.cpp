@@ -17,40 +17,43 @@ withdrawalwindow::~withdrawalwindow()
 
 void withdrawalwindow::on_btn20_clicked()
 {
-    withdrawal();
-    ui->lineEdit->setText("20");
+    ui->lbl_amount->setText("20");
 }
 
+void withdrawalwindow::withdrawal_status(QNetworkReply* reply)
+{
+    QByteArray response_data = reply->readAll();
+    qDebug() << response_data;
+    ui->lbl_withdrawal_status->setText("Status: ok");
+}
 
 void withdrawalwindow::on_btn40_clicked()
 {
-
+    ui->lbl_amount->setText("40");
 }
 
 void withdrawalwindow::on_btn60_clicked()
 {
-
+    ui->lbl_amount->setText("60");
 }
 
 void withdrawalwindow::on_btn100_clicked()
 {
-
+    ui->lbl_amount->setText("100");
 }
 
 void withdrawalwindow::on_btn200_clicked()
 {
-
+    ui->lbl_amount->setText("200");
 }
 
 void withdrawalwindow::on_btn500_clicked()
 {
-
+    ui->lbl_amount->setText("500");
 }
 void withdrawalwindow::on_btnAmountOK_clicked()
 {
- // PUT PUT
-
-
+    withdrawal();
 }
 
 
@@ -73,12 +76,24 @@ void withdrawalwindow::withdrawal()
 
 
 void withdrawalwindow::getWithdrawal(QNetworkReply *reply) {
-    qDebug() << "Hello world";
     QString id = this->getCardAccessSlot(reply);
     qDebug() << "tilinumero:" + id;
-    qDebug() << "HERE ******";
     reply->deleteLater();
     cardAccessManager->deleteLater();
+    int amount = ui->lbl_amount->text().toInt();
+    QJsonObject jsonObj;
+    jsonObj.insert("account_number",id);
+    jsonObj.insert("card_number",cardNumber);
+    jsonObj.insert("amount", amount);
+
+    QString site_url="http://localhost:3000/withdrawal";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    cardAccessManager = new QNetworkAccessManager(this);
+    connect(cardAccessManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(withdrawal_status(QNetworkReply*)));
+
+    cardAccessManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
 QString withdrawalwindow::getCardAccessSlot(QNetworkReply *reply)

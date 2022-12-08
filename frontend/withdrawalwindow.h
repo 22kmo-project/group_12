@@ -37,6 +37,8 @@ private slots:
 
     void on_btnAmountOK_clicked();
 
+    void withdrawal_status(QNetworkReply *reply);
+
     void getWithdrawal(QNetworkReply *reply);
 
 private:
