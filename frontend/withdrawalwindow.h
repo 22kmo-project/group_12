@@ -37,12 +37,13 @@ private slots:
 
     void on_btnAmountOK_clicked();
 
-    void getCardAccessSlot(QNetworkReply *reply);
+    void getWithdrawal(QNetworkReply *reply);
 
 private:
     Ui::withdrawalwindow *ui;
     void withdrawal();
 
+    QString getCardAccessSlot(QNetworkReply *reply);
     QNetworkAccessManager *cardAccessManager;
     QNetworkReply *reply;
     QByteArray account_number;
