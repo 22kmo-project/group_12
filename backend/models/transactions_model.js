@@ -21,6 +21,13 @@ const transactions = {
       'update transactions set description=?,account_number=?, card_number=?, amount=?, date_time=? where idtransactions=?',
       [update_data.description, update_data.account_number, update_data.card_number, update_data.amount, update_data.date_time, id],
       callback);
+  },
+  // Nosto proseduuri
+  withdrawal: function(int_account_number, int_card_number, int_amount, callback) {
+    return db.query(
+      'CALL withdrawal(?,?,?);',
+      [int_account_number, int_card_number, int_amount],
+      callback);
   }
 };
 module.exports = transactions;
