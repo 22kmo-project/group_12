@@ -22,9 +22,22 @@ void withdrawalwindow::on_btn20_clicked()
 
 void withdrawalwindow::withdrawal_status(QNetworkReply* reply)
 {
-    QByteArray response_data = reply->readAll();
-    qDebug() << response_data;
-    ui->lbl_withdrawal_status->setText("Status: ok");
+    QByteArray response_data=reply->readAll();
+    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    QJsonObject status = json_doc.object();
+
+    QString text;
+    qDebug() << status;
+    if (status["status"] != 200) {
+        text = "Virhe nodejs";
+        // Virhe tapahtunut nodejs
+    } else if (status["result"].toObject()["affectedRows"] == 0) {
+        text = "Ei saldoa";
+    } else {
+        text = "Ok";
+    }
+    ui->lbl_withdrawal_status->setText(text);
+
 }
 
 void withdrawalwindow::on_btn40_clicked()

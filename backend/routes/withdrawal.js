@@ -9,7 +9,7 @@ function(request, response) {
       if (err) {
         response.json(err);
       } else {
-        response.json({"status": "200", "result": dbResult});
+        response.json({"status": 200, "result": dbResult});
       }
     });
 });
