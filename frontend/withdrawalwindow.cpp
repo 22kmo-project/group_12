@@ -30,14 +30,16 @@ void withdrawalwindow::withdrawal_status(QNetworkReply* reply)
     qDebug() << status;
 
     if (status["status"] != 200) {
-        text = "Error";
-    } else if (status["result"].toObject()["affectedRows"] == 0) {
-        text = "Insufficient balance";
-    } else {
-        text = "Withdrawal executed successfully";
+        ui->lbl_withdrawal_status->setText("<font color='red'>Error</font>");
     }
-
-    ui->lbl_withdrawal_status->setText(text);
+    else if (status["result"].toObject()["affectedRows"] == 0) {
+        ui->lbl_withdrawal_status->setText("<font color='red'>Insufficient funds</font>");
+    }
+    else {
+        ui->lbl_withdrawal_status->setText("<font color='green'>Withdrawal executed successfully</font>");
+        }
+    //ui->lbl_withdrawal_status->setText("<font color='red'>'text'</font>");
+    //ui->lbl_withdrawal_status->setText(text);
 
 }
 

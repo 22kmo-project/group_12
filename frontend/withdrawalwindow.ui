@@ -168,7 +168,7 @@
      <widget class="QLabel" name="lbl_withdrawal_status">
       <property name="font">
        <font>
-        <pointsize>15</pointsize>
+        <pointsize>20</pointsize>
        </font>
       </property>
       <property name="text">
