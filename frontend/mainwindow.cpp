@@ -37,6 +37,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btn_login_clicked()
 {
+    ui->label_infobox->clear();
     card_number = ui->text_id->text(); //otetaan käyttäjän syötteet vastaan, ja tallennetaan muuttujiin
     QString pincode = ui->text_PIN->text();
 
@@ -92,9 +93,8 @@ void MainWindow::moveToMenu()
 
 void MainWindow::moveToWithdrawal()
 {
-    objectWithdrawMenu.cardNumber = card_number;
-    // Withdrawal-ikkunaan siirtyminen
-    ui->stackedWidget->setCurrentIndex(3);
+    objectWithdrawMenu.cardNumber = card_number; //viedään card_number withdraw-ikkunaan
+        ui->stackedWidget->setCurrentIndex(3); // Withdrawal-ikkunaan siirtyminen
 
 }
 

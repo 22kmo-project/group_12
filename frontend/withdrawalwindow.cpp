@@ -28,14 +28,15 @@ void withdrawalwindow::withdrawal_status(QNetworkReply* reply)
 
     QString text;
     qDebug() << status;
+
     if (status["status"] != 200) {
-        text = "Virhe nodejs";
-        // Virhe tapahtunut nodejs
+        text = "Error";
     } else if (status["result"].toObject()["affectedRows"] == 0) {
-        text = "Ei saldoa";
+        text = "Insufficient balance";
     } else {
-        text = "Ok";
+        text = "Withdrawal executed successfully";
     }
+
     ui->lbl_withdrawal_status->setText(text);
 
 }
@@ -66,33 +67,30 @@ void withdrawalwindow::on_btn500_clicked()
 }
 void withdrawalwindow::on_btnAmountOK_clicked()
 {
+    ui->lbl_withdrawal_status->clear();
     withdrawal();
 }
 
 
-
 void withdrawalwindow::withdrawal()
 {
-    //qDebug()<< "numero on: "+cardNumber;
     QString site_url="http://localhost:3000/card_access/"+cardNumber;
     QNetworkRequest request((site_url));
-    qDebug() << "Kortin numero on"+ cardNumber;
+    qDebug() << "Number of the card in use is: "+ cardNumber;
 
     cardAccessManager = new QNetworkAccessManager(this);
-
     connect(cardAccessManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getWithdrawal(QNetworkReply*)));
-
     reply = cardAccessManager->get(request);
-    //tänne toiminto joka hakee card_numberin perusteella accessin, tallennetaan muuttujaan ja sitten nostetaan annettu
-    //summa tililtä johon kortti liitettynnä
 }
 
 
 void withdrawalwindow::getWithdrawal(QNetworkReply *reply) {
+
     QString id = this->getCardAccessSlot(reply);
-    qDebug() << "tilinumero:" + id;
+
     reply->deleteLater();
     cardAccessManager->deleteLater();
+
     int amount = ui->lbl_amount->text().toInt();
     QJsonObject jsonObj;
     jsonObj.insert("account_number",id);
@@ -111,14 +109,13 @@ void withdrawalwindow::getWithdrawal(QNetworkReply *reply) {
 
 QString withdrawalwindow::getCardAccessSlot(QNetworkReply *reply)
 {
-    account_number=reply->readAll();
-    qDebug() << "Tilin numero on:"+account_number;
+    account_number=reply->readAll();        //Haetaan korttiin liitetyn tilin numero
     QJsonDocument json_doc = QJsonDocument::fromJson(account_number);
         QJsonObject json_obj = json_doc.object();
         QString tili;
         tili=QString::number(json_obj["account_number"].toInt());
 
-        qDebug()<<"Tälle tilille on pääsy:" +tili;
+        qDebug()<<"This card has access to account: " +tili;
 
         return tili;
 }
