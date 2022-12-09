@@ -16,147 +16,166 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>110</y>
-     <width>561</width>
-     <height>411</height>
+     <x>92</x>
+     <y>100</y>
+     <width>621</width>
+     <height>381</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout_3">
+   <layout class="QGridLayout" name="gridLayout_4">
     <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0" colspan="3">
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="1">
-         <widget class="QPushButton" name="btn100">
-          <property name="font">
-           <font>
-            <pointsize>25</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>100€</string>
-          </property>
-         </widget>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0" colspan="3">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="1" column="1">
+           <widget class="QPushButton" name="btn100">
+            <property name="font">
+             <font>
+              <pointsize>25</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>100€</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="btn60">
+            <property name="font">
+             <font>
+              <pointsize>25</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>60€</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="btn20">
+            <property name="font">
+             <font>
+              <pointsize>25</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>20€</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="btn40">
+            <property name="font">
+             <font>
+              <pointsize>25</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>40€</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="btn200">
+            <property name="font">
+             <font>
+              <pointsize>25</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>200€</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="btn500">
+            <property name="font">
+             <font>
+              <pointsize>25</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>500€</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="btn60">
+         <widget class="QLabel" name="label">
           <property name="font">
            <font>
             <pointsize>25</pointsize>
            </font>
           </property>
           <property name="text">
-           <string>60€</string>
+           <string>Enter amount:</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QPushButton" name="btn20">
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lbl_amount">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="font">
            <font>
             <pointsize>25</pointsize>
            </font>
-          </property>
-          <property name="text">
-           <string>20€</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="btn40">
+        <item row="1" column="2">
+         <widget class="QPushButton" name="btnAmountOK">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="font">
            <font>
             <pointsize>25</pointsize>
            </font>
           </property>
           <property name="text">
-           <string>40€</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QPushButton" name="btn200">
-          <property name="font">
-           <font>
-            <pointsize>25</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>200€</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="btn500">
-          <property name="font">
-           <font>
-            <pointsize>25</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>500€</string>
+           <string>OK</string>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QPushButton" name="btnCloseWithdrawal">
         <property name="font">
          <font>
           <pointsize>25</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>Enter amount:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>25</pointsize>
-         </font>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="btnAmountOK">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>25</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>OK</string>
+         <string>Close</string>
         </property>
        </widget>
       </item>
      </layout>
     </item>
     <item row="1" column="0">
-     <widget class="QPushButton" name="btnCloseWithdrawal">
+     <widget class="QLabel" name="lbl_withdrawal_status">
       <property name="font">
        <font>
-        <pointsize>25</pointsize>
+        <pointsize>20</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>Close</string>
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>

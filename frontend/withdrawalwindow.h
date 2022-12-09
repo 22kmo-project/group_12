@@ -3,6 +3,10 @@
 
 #include <QWidget>
 
+#include <QtNetwork>
+#include <QNetworkAccessManager>
+#include <QJsonDocument>
+
 namespace Ui {
 class withdrawalwindow;
 }
@@ -15,7 +19,7 @@ public:
     explicit withdrawalwindow(QWidget *parent = nullptr);
     ~withdrawalwindow();
 
-
+    QString cardNumber;
 private slots:
     void on_btn20_clicked();
 
@@ -33,8 +37,18 @@ private slots:
 
     void on_btnAmountOK_clicked();
 
+    void withdrawal_status(QNetworkReply *reply);
+
+    void getWithdrawal(QNetworkReply *reply);
+
 private:
     Ui::withdrawalwindow *ui;
+    void withdrawal();
+
+    QString getCardAccessSlot(QNetworkReply *reply);
+    QNetworkAccessManager *cardAccessManager;
+    QNetworkReply *reply;
+    QByteArray account_number;
 
 
 signals:

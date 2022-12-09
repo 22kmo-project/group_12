@@ -57,4 +57,15 @@ function(request, response) {
   });
 });
 
+router.get('/:id', 
+function(request, response) {
+  transactions.update(request.params.id, request.body, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult);
+    }
+  });
+});
+
 module.exports = router;
