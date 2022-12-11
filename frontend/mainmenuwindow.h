@@ -1,7 +1,9 @@
 #ifndef MAINMENUWINDOW_H
 #define MAINMENUWINDOW_H
 
-#include "qbitarray.h"
+#include <QtNetwork>
+#include <QNetworkAccessManager>
+#include <QJsonDocument>
 
 
 #include <QWidget>
@@ -31,11 +33,17 @@ private slots:
     void on_btnTransactions_clicked();
     void on_btnLogOut_clicked();
 
+    void getTransactions(QNetworkReply *reply); //tänne tulee vastaukset tilitapahtumista
+
     void tilinumero(QString);
 private:
     Ui::Mainmenuwindow *ui;
     QByteArray webToken;
-    QString accountID;  //tämä pitää hakea mainwindowista
+    QString accountID;
+
+    QNetworkAccessManager *transactionsManager;
+    QNetworkReply *reply;
+    QByteArray response_data;
 
 signals:
     void logOutClicked();
