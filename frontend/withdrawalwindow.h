@@ -20,39 +20,32 @@ public:
     ~withdrawalwindow();
 
     QString cardNumber;
+
 private slots:
     void on_btn20_clicked();
-
     void on_btn40_clicked();
-
     void on_btn60_clicked();
-
     void on_btn100_clicked();
-
     void on_btn200_clicked();
-
     void on_btn500_clicked();
-
     void on_btnCloseWithdrawal_clicked();
-
     void on_btnAmountOK_clicked();
 
     void withdrawal_status(QNetworkReply *reply);
-
     void getWithdrawal(QNetworkReply *reply);
 
 private:
     Ui::withdrawalwindow *ui;
     void withdrawal();
 
-    QString getCardAccessSlot(QNetworkReply *reply);
+    QString getCardAccess(QNetworkReply *reply);
+
     QNetworkAccessManager *cardAccessManager;
     QNetworkReply *reply;
-    QByteArray account_number;
-
+    QString account_number;
 
 signals:
-    void closeClicked();
+    void closeClicked();  //tämä voi olla mikä funktio vaan??
 };
 
 #endif // WITHDRAWALWINDOW_H

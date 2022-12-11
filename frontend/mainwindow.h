@@ -23,9 +23,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+    void korttinumero(QString);  //DELETE
+
 private slots:
     void on_btn_login_clicked();
     void loginSlot (QNetworkReply *reply);
+
+    void accountIdSlot(QNetworkReply *reply); //tänne liitetään getAccountId
 
     void logOut();
     void moveToMenu();
@@ -44,6 +49,9 @@ private:
     QNetworkReply *reply;
     QByteArray response_data;
     QString card_number;
+    QString account_number;
+
+    void getAccountId(); //tällä haetaan korttiin liitetty tili, HTTP GET
 
     void clearFields();
 

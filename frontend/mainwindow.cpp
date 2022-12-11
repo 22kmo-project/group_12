@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&objectWithdrawMenu, SIGNAL(closeClicked()), this, SLOT(moveToMenu()));
     connect(&objectTransferMenu, SIGNAL(closeClicked()), this, SLOT(moveToMenu()));
 
-
+    connect(this, SIGNAL(korttinumero(QString)), &objectMainMenu, SLOT(tilinumero(QString)));
 
 }
 
@@ -65,7 +65,7 @@ void MainWindow::loginSlot(QNetworkReply *reply)  //tämä käsittelee vastaukse
     qDebug() << test;
 
     if(test == -1 && response_data.length() > 0){
-        objectMainMenu.setWebToken(response_data);
+        getAccountId();
         moveToMenu();
         clearFields();
 
@@ -93,8 +93,9 @@ void MainWindow::moveToMenu()
 
 void MainWindow::moveToWithdrawal()
 {
-    objectWithdrawMenu.cardNumber = card_number; //viedään card_number withdraw-ikkunaan
-        ui->stackedWidget->setCurrentIndex(3); // Withdrawal-ikkunaan siirtyminen
+    objectWithdrawMenu.cardNumber = card_number; //viedään card_number withdraw-ikkunaan, public/private??
+
+    ui->stackedWidget->setCurrentIndex(3); // Withdrawal-ikkunaan siirtyminen
 
 }
 
@@ -123,4 +124,29 @@ void MainWindow::netRequest(QString siteurl)
 
     reply = netManager->get(request);
 }
+
+void MainWindow::getAccountId()  //haetaan tilin numero Main Windowiin
+{
+    QString site_url="http://localhost:3000/card_access/"+card_number;
+    QNetworkRequest request((site_url));
+    qDebug() << "Number of the card in use is: "+ card_number;
+    netManager = new QNetworkAccessManager(this);
+    connect(netManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(accountIdSlot(QNetworkReply*)));
+    reply = netManager->get(request);
+}
+
+void MainWindow::accountIdSlot(QNetworkReply *reply) //Tilinumerohaun vastaus tulee tänne
+{
+    QByteArray response=reply->readAll();        //Haetaan korttiin liitetyn tilin numero
+    QJsonDocument json_doc = QJsonDocument::fromJson(response);
+    QJsonObject json_obj = json_doc.object();
+
+    account_number=QString::number(json_obj["account_number"].toInt());
+    emit korttinumero(account_number);
+    qDebug()<<"ja MainWindowissa tilin numero on: " +account_number;
+
+    reply->deleteLater();
+    netManager->deleteLater();
+}
+
 

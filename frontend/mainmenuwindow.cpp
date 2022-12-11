@@ -1,7 +1,7 @@
 #include "mainmenuwindow.h"
 #include "ui_mainmenuwindow.h"
 
-Mainmenuwindow::Mainmenuwindow(QString card_number, QWidget *parent) :
+Mainmenuwindow::Mainmenuwindow(QString card_number,  QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Mainmenuwindow)
 {
@@ -19,14 +19,8 @@ Mainmenuwindow::Mainmenuwindow(QWidget *parent):
 Mainmenuwindow::~Mainmenuwindow()
 {
     delete ui;
-//    delete objectWithdrawal;
-//    objectWithdrawal = nullptr;
+
 }
-
-//const QString &Mainmenuwindow::getWebToken() const
-//{
-
-//}
 
 void Mainmenuwindow::setWebToken(QByteArray &newWebToken)
 {
@@ -56,12 +50,14 @@ void Mainmenuwindow::on_btnTransferFunds_clicked()
 
 void Mainmenuwindow::on_btnCheckBalance_clicked()
 {
+    qDebug() << accountID;
     //Näytetään saldo tekstiboksissa
 }
 
 
 void Mainmenuwindow::on_btnTransactions_clicked()
 {    
+
     //tilin omistajan tiedot, 10 viimeistä tilitapahtumaa
 
 }
@@ -72,6 +68,11 @@ void Mainmenuwindow::on_btnLogOut_clicked()
 
     emit logOutClicked();
 
+}
+
+void Mainmenuwindow::tilinumero(QString id)
+{
+    accountID = id;
 }
 
 

@@ -31,10 +31,11 @@ private slots:
     void on_btnTransactions_clicked();
     void on_btnLogOut_clicked();
 
+    void tilinumero(QString);
 private:
     Ui::Mainmenuwindow *ui;
-
     QByteArray webToken;
+    QString accountID;  //tämä pitää hakea mainwindowista
 
 signals:
     void logOutClicked();
