@@ -32,6 +32,8 @@ private slots:
     void withdrawal_status(QNetworkReply *reply);
     void getWithdrawalSlot(QNetworkReply *reply);
 
+    void on_lbl_amount_textEdited(const QString &arg1);
+
 private:
     Ui::withdrawalwindow *ui;
     void withdrawal();
@@ -41,7 +43,9 @@ private:
     QString account_number;
 
 signals:
-    void closeClicked();  //tämä voi olla mikä funktio vaan??
+    void closeClicked();
+    void buttonPressed();
+
 };
 
 #endif // WITHDRAWALWINDOW_H

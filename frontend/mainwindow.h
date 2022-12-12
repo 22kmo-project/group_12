@@ -5,11 +5,13 @@
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
+#include "QTimer"
 
 #include "mainmenuwindow.h"
 #include "transferfundswindow.h"
 #include "withdrawalwindow.h"
 #include "creditordebitwindow.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -37,6 +39,8 @@ private slots:
     void moveToWithdrawal();
     void moveToTransferFunds();
     void netRequest(QString url);
+    void timerReset();
+    void timerTriggered();
 
 private:
     Ui::MainWindow *ui;
@@ -44,6 +48,7 @@ private:
     transferfundswindow objectTransferMenu;
     withdrawalwindow objectWithdrawMenu;
     creditOrDebitWindow objectCreditDebitMenu;
+    QTimer *timer1;
 
     QNetworkAccessManager *netManager;
     QNetworkReply *reply;

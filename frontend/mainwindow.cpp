@@ -21,6 +21,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&objectWithdrawMenu, SIGNAL(closeClicked()), this, SLOT(moveToMenu()));
     connect(&objectTransferMenu, SIGNAL(closeClicked()), this, SLOT(moveToMenu()));
 
+
+    // Ajastimet
+    timer1 = new QTimer(this);
+
+    connect(timer1, SIGNAL(timeout()), this, SLOT(timerTriggered()));
+    // Ajastimen resetointi kun jotain nappia painetaan
+    connect(&objectWithdrawMenu, SIGNAL(buttonPressed()), this, SLOT(timerReset()));
+    connect(&objectTransferMenu, SIGNAL(buttonPressed()), this, SLOT(timerReset()));
+
     connect(this, SIGNAL(cardAndAccount(QString,QString)), &objectMainMenu, SLOT(cardAndAccountSlot(QString, QString)));
 
 }
@@ -28,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+
 }
 
 
@@ -79,10 +89,15 @@ void MainWindow::logOut()
 {
     // Login screeniin siirtyminen
     ui->stackedWidget->setCurrentIndex(0);
+
 }
 
 void MainWindow::moveToMenu()
 {
+
+    if(ui->stackedWidget->currentIndex() > 0){
+        timerReset();
+    }
 
     // Päänäkymään/menuun siirtyminen
     ui->stackedWidget->setCurrentIndex(1);
@@ -91,15 +106,16 @@ void MainWindow::moveToMenu()
 void MainWindow::moveToWithdrawal()
 {
     objectWithdrawMenu.cardNumber = card_number; //viedään card_number withdraw-ikkunaan, public/private??
-
+    objectWithdrawMenu.cardNumber = card_number; //viedään card_number withdraw-ikkunaan
     ui->stackedWidget->setCurrentIndex(3); // Withdrawal-ikkunaan siirtyminen
-
+    timerReset();
 }
 
 void MainWindow::moveToTransferFunds()
 {
     // transferfunds näkymään siirtyminen
     ui->stackedWidget->setCurrentIndex(2);
+    timerReset();
 }
 
 void MainWindow::clearFields()
@@ -121,6 +137,30 @@ void MainWindow::netRequest(QString siteurl)
 
     reply = netManager->get(request);
 }
+
+
+void MainWindow::timerReset()
+{
+    if(ui->stackedWidget->currentIndex() == 1){
+         timer1->stop();
+         timer1->start(30000);
+    }else{
+         timer1->stop();
+         timer1->start(10000);
+        }
+}
+
+void MainWindow::timerTriggered()
+{
+    if(ui->stackedWidget->currentIndex() > 1){
+        ui->stackedWidget->setCurrentIndex(1);
+        timer1->start(30000);
+    }
+    else if(ui->stackedWidget->currentIndex() == 1){
+        logOut();
+    }
+}
+
 
 void MainWindow::getAccountId()  //haetaan tilin numero Main Windowiin
 {
@@ -148,5 +188,4 @@ void MainWindow::accountIdSlot(QNetworkReply *reply) //Tilinumerohaun vastaus tu
     reply->deleteLater();
     netManager->deleteLater();
 }
-
 
