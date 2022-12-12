@@ -1,0 +1,4 @@
+Kymmenen viimeisintä tilitapahtumaa, annetaan tilinumero:
+
+SELECT description as "description", account_number as "Account number", amount as "Amount", date_format(date_time, "%d.%m.%y")
+as "Date" FROM transactions WHERE account_number =100  ORDER BY idtransactions DESC LIMIT 10;

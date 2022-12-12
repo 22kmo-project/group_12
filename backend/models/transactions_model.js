@@ -28,6 +28,9 @@ const transactions = {
       'CALL withdrawal(?,?,?);',
       [int_account_number, int_card_number, int_amount],
       callback);
-  }
+  },
+  getTenTransactions: function(id, callback) { //TESTIÄ
+    return db.query('SELECT description as "Description", account_number as "Account number", amount as "Amount", date_format(date_time, "%d.%m.%y") as "Date" FROM transactions WHERE account_number =? ORDER BY idtransactions DESC LIMIT 10', [id], callback);
+}
 };
 module.exports = transactions;

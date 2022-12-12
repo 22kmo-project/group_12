@@ -1,56 +1,45 @@
 #include "mainmenuwindow.h"
 #include "ui_mainmenuwindow.h"
 
-Mainmenuwindow::Mainmenuwindow(QString card_number, QWidget *parent) :
+Mainmenuwindow::Mainmenuwindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Mainmenuwindow)
 {
     ui->setupUi(this);
-    ui->lineEdit->setText(card_number);  //tulostetaan card_number mainmenussa näkyviin
+    ui->label->setText("Choose your action:");
 }
 
-Mainmenuwindow::Mainmenuwindow(QWidget *parent):
-    QWidget(parent),
-    ui(new Ui::Mainmenuwindow)
-{
-    ui->setupUi(this);
-}
 
 Mainmenuwindow::~Mainmenuwindow()
 {
-    delete ui;
-//    delete objectWithdrawal;
-//    objectWithdrawal = nullptr;
+    delete ui;    
 }
 
-//const QString &Mainmenuwindow::getWebToken() const
-//{
-
-//}
 
 void Mainmenuwindow::setWebToken(QByteArray &newWebToken)
 {
     webToken = newWebToken;
 }
 
+
 QByteArray Mainmenuwindow::getWebToken()
 {
     return webToken;
 }
 
+
 void Mainmenuwindow::on_btnWithdrawal_clicked()
 {
-
+    ui->text_infobox->clear();
     emit withdrawalClicked();
-
 }
 
 
 void Mainmenuwindow::on_btnTransferFunds_clicked()
 {
-
     emit transferFundsClicked();
     ui->btnTransferFunds->setEnabled(false);
+    ui->text_infobox->clear();
 }
 
 
@@ -60,18 +49,49 @@ void Mainmenuwindow::on_btnCheckBalance_clicked()
 }
 
 
-void Mainmenuwindow::on_btnTransactions_clicked()
+void Mainmenuwindow::on_btnTransactions_clicked()  //Haetaan tilitapahtumat, vastaus getTransactionsSlottiin
 {    
-    //tilin omistajan tiedot, 10 viimeistä tilitapahtumaa
+    qDebug() << accountID;
+    QString site_url="http://localhost:3000/tentransactions/" +accountID;
+    QNetworkRequest request((site_url));
 
+    transactionsManager = new QNetworkAccessManager(this);
+
+    connect(transactionsManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getTransactionsSlot(QNetworkReply*)));
+
+    reply = transactionsManager->get(request);
 }
 
 
 void Mainmenuwindow::on_btnLogOut_clicked()
 {
-
+    ui->text_infobox->clear();
     emit logOutClicked();
+}
 
+
+void Mainmenuwindow::getTransactionsSlot(QNetworkReply *reply) //Tänne tilitapahtumien vastaus
+{
+    QByteArray response_data=reply->readAll();
+
+    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    QJsonArray json_array = json_doc.array();
+    QString transactions;
+    foreach (const QJsonValue &value, json_array) {
+            QJsonObject json_obj = value.toObject();
+            transactions+=json_obj["Description"].toString()+",  "+QString::number(json_obj["Account number"].toInt())
+            +",  "+QString::number(json_obj["Amount"].toInt())+",  "+(json_obj["Date"].toString())+"\r";
+        }
+
+    ui->text_infobox->setText(transactions);    //tulostetaan vastaus tekstiboksiin
+    reply->deleteLater();
+    transactionsManager->deleteLater();
+}
+
+void Mainmenuwindow::cardAndAccountSlot(QString accId, QString cardId)  //tallennetaan tili-ja korttinumero tämän luokan muuttujiin
+{
+    accountID = accId;
+    cardID = cardId;
 }
 
 

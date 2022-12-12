@@ -17,6 +17,7 @@ var withdrawalRouter = require('./routes/withdrawal');
 var accesslistRouter = require('./routes/accesslist');
 var bankaccountRouter = require('./routes/bankaccount');
 var bankuserRouter = require('./routes/bankuser');
+var tentransactionsRouter = require('./routes/tentransactions');
 
 var app = express();
 
@@ -40,6 +41,7 @@ app.use('/accesslist', accesslistRouter);
 app.use('/debit_or_credit', debitOrCreditRouter);
 app.use('/bankuser', bankuserRouter);
 app.use('/bankaccount', bankaccountRouter);
+app.use('/tentransactions', tentransactionsRouter);
 
 
 function authenticateToken(req, res, next) {   
