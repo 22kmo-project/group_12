@@ -14,9 +14,10 @@ transferfundswindow::~transferfundswindow()
 }
 void transferfundswindow::on_btnTransferOK_clicked()
 {
-
+    emit buttonPressed();
 }
 void transferfundswindow::on_btnCloseTransfer_clicked()
 {
     emit closeClicked();
+    emit buttonPressed();
 }

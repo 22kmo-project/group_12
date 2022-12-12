@@ -41,6 +41,8 @@ private slots:
 
     void getWithdrawal(QNetworkReply *reply);
 
+    void on_lbl_amount_textEdited(const QString &arg1);
+
 private:
     Ui::withdrawalwindow *ui;
     void withdrawal();
@@ -53,6 +55,7 @@ private:
 
 signals:
     void closeClicked();
+    void buttonPressed();
 };
 
 #endif // WITHDRAWALWINDOW_H

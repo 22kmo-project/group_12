@@ -18,6 +18,7 @@ withdrawalwindow::~withdrawalwindow()
 void withdrawalwindow::on_btn20_clicked()
 {
     ui->lbl_amount->setText("20");
+    emit buttonPressed();
 }
 
 void withdrawalwindow::withdrawal_status(QNetworkReply* reply)
@@ -46,31 +47,37 @@ void withdrawalwindow::withdrawal_status(QNetworkReply* reply)
 void withdrawalwindow::on_btn40_clicked()
 {
     ui->lbl_amount->setText("40");
+    emit buttonPressed();
 }
 
 void withdrawalwindow::on_btn60_clicked()
 {
     ui->lbl_amount->setText("60");
+    emit buttonPressed();
 }
 
 void withdrawalwindow::on_btn100_clicked()
 {
     ui->lbl_amount->setText("100");
+    emit buttonPressed();
 }
 
 void withdrawalwindow::on_btn200_clicked()
 {
     ui->lbl_amount->setText("200");
+    emit buttonPressed();
 }
 
 void withdrawalwindow::on_btn500_clicked()
 {
     ui->lbl_amount->setText("500");
+    emit buttonPressed();
 }
 void withdrawalwindow::on_btnAmountOK_clicked()
 {
     ui->lbl_withdrawal_status->clear();
     withdrawal();
+    emit buttonPressed();
 }
 
 
@@ -126,4 +133,11 @@ QString withdrawalwindow::getCardAccessSlot(QNetworkReply *reply)
 void withdrawalwindow::on_btnCloseWithdrawal_clicked()
 {
     emit closeClicked();
+    emit buttonPressed();
 }
+
+void withdrawalwindow::on_lbl_amount_textEdited(const QString &arg1)
+{
+    emit buttonPressed();
+}
+

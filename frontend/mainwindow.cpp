@@ -21,13 +21,19 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&objectWithdrawMenu, SIGNAL(closeClicked()), this, SLOT(moveToMenu()));
     connect(&objectTransferMenu, SIGNAL(closeClicked()), this, SLOT(moveToMenu()));
 
+    // Ajastimet
+    timer1 = new QTimer(this);
 
-
+    connect(timer1, SIGNAL(timeout()), this, SLOT(timerTriggered()));
+    // Ajastimen resetointi kun jotain nappia painetaan
+    connect(&objectWithdrawMenu, SIGNAL(buttonPressed()), this, SLOT(timerReset()));
+    connect(&objectTransferMenu, SIGNAL(buttonPressed()), this, SLOT(timerReset()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+
 //    delete netManager;
 //    netManager = nullptr;
 //    delete reply;
@@ -83,18 +89,26 @@ void MainWindow::logOut()
 {
     // Login screeniin siirtyminen
     ui->stackedWidget->setCurrentIndex(0);
+
 }
 
 void MainWindow::moveToMenu()
 {
+    if(ui->stackedWidget->currentIndex() > 0){
+        timerReset();
+    }
     // Päänäkymään/menuun siirtyminen
     ui->stackedWidget->setCurrentIndex(1);
+
+
+
 }
 
 void MainWindow::moveToWithdrawal()
 {
     objectWithdrawMenu.cardNumber = card_number; //viedään card_number withdraw-ikkunaan
-        ui->stackedWidget->setCurrentIndex(3); // Withdrawal-ikkunaan siirtyminen
+    ui->stackedWidget->setCurrentIndex(3); // Withdrawal-ikkunaan siirtyminen
+    timerReset();
 
 }
 
@@ -102,6 +116,7 @@ void MainWindow::moveToTransferFunds()
 {
     // transferfunds näkymään siirtyminen
     ui->stackedWidget->setCurrentIndex(2);
+    timerReset();
 }
 
 void MainWindow::clearFields()
@@ -122,5 +137,27 @@ void MainWindow::netRequest(QString siteurl)
     connect(netManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(getBookSlot(QNetworkReply*)));
 
     reply = netManager->get(request);
+}
+
+void MainWindow::timerReset()
+{
+    if(ui->stackedWidget->currentIndex() == 1){
+         timer1->stop();
+         timer1->start(30000);
+    }else{
+         timer1->stop();
+         timer1->start(10000);
+        }
+}
+
+void MainWindow::timerTriggered()
+{
+    if(ui->stackedWidget->currentIndex() > 1){
+        ui->stackedWidget->setCurrentIndex(1);
+        timer1->start(30000);
+    }
+    else if(ui->stackedWidget->currentIndex() == 1){
+        logOut();
+    }
 }
 

@@ -25,6 +25,7 @@ private:
 
 signals:
     void closeClicked();
+    void buttonPressed();
 };
 
 #endif // TRANSFERFUNDSWINDOW_H

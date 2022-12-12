@@ -19,14 +19,8 @@ Mainmenuwindow::Mainmenuwindow(QWidget *parent):
 Mainmenuwindow::~Mainmenuwindow()
 {
     delete ui;
-//    delete objectWithdrawal;
-//    objectWithdrawal = nullptr;
 }
 
-//const QString &Mainmenuwindow::getWebToken() const
-//{
-
-//}
 
 void Mainmenuwindow::setWebToken(QByteArray &newWebToken)
 {
