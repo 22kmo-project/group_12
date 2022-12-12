@@ -94,4 +94,10 @@ void Mainmenuwindow::cardAndAccountSlot(QString accId, QString cardId)  //tallen
     cardID = cardId;
 }
 
+void Mainmenuwindow::clearFields()
+{
+    ui->text_infobox->clear();
+
+}
+
 

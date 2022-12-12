@@ -25,6 +25,7 @@ public:
 //    const QString &getWebToken() const;
     void setWebToken(QByteArray &newWebToken);
     QByteArray getWebToken();
+    void clearFields();
 
 private slots:
     void on_btnWithdrawal_clicked();
@@ -35,6 +36,7 @@ private slots:
 
     void getTransactionsSlot(QNetworkReply *reply); //tänne tulee vastaukset tilitapahtumista
     void cardAndAccountSlot(QString, QString);      //vastauksena kortin ja tilin numerot main menuun
+
 
 private:
     Ui::Mainmenuwindow *ui;

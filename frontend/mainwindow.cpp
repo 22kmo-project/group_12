@@ -124,6 +124,7 @@ void MainWindow::clearFields()
     ui->label_infobox->clear();
     ui->text_id->clear();
     ui->text_PIN->clear();
+
 }
 
 void MainWindow::netRequest(QString siteurl)
@@ -159,6 +160,8 @@ void MainWindow::timerTriggered()
     else if(ui->stackedWidget->currentIndex() == 1){
         logOut();
     }
+    objectMainMenu.clearFields();
+    objectWithdrawMenu.clearFields();
 }
 
 

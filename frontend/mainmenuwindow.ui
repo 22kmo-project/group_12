@@ -16,7 +16,7 @@
   <property name="windowTitle">
    <string>Main Menu</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>91</x>
@@ -44,6 +44,9 @@
        <font>
         <pointsize>12</pointsize>
        </font>
+      </property>
+      <property name="readOnly">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
