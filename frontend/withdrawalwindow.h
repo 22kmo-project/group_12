@@ -20,6 +20,9 @@ public:
     ~withdrawalwindow();
     QString cardNumber;
 
+    void clearFields();
+
+
 private slots:
     void on_btn20_clicked();
     void on_btn40_clicked();

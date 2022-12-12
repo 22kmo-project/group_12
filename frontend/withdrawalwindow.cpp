@@ -92,6 +92,12 @@ void withdrawalwindow::getWithdrawalSlot(QNetworkReply *reply) {  //tehdään no
     cardAccessManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
+void withdrawalwindow::clearFields()
+{
+    ui->lbl_amount->clear();
+    ui->lbl_withdrawal_status->clear();
+}
+
 
 void withdrawalwindow::withdrawal_status(QNetworkReply* reply)  //vastauksen perusteella annetaan käyttäjälle virheilmoitukset
 {
@@ -128,6 +134,7 @@ void withdrawalwindow::on_btnCloseWithdrawal_clicked()
 {
     emit closeClicked();
     emit buttonPressed();
+    clearFields();
 }
 
 void withdrawalwindow::on_lbl_amount_textEdited(const QString &arg1)
