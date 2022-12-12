@@ -12,14 +12,12 @@ withdrawalwindow::withdrawalwindow(QWidget *parent) :
 withdrawalwindow::~withdrawalwindow()
 {
     delete ui;
-
 }
 
 void withdrawalwindow::on_btn20_clicked()
 {
     ui->lbl_amount->setText("20");
 }
-
 
 void withdrawalwindow::on_btn40_clicked()
 {
@@ -54,19 +52,19 @@ void withdrawalwindow::on_btnAmountOK_clicked()
 
 void withdrawalwindow::withdrawal()
 {
-    QString site_url="http://localhost:3000/card_access/"+cardNumber;
+    QString site_url="http://localhost:3000/card_access/"+cardNumber;  //haetaan korttiin liitetyn tilin numero
     QNetworkRequest request((site_url));
     qDebug() << "Number of the card in use is: "+ cardNumber;
 
     cardAccessManager = new QNetworkAccessManager(this);
-    connect(cardAccessManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getWithdrawal(QNetworkReply*)));
+    connect(cardAccessManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getWithdrawalSlot(QNetworkReply*)));
     reply = cardAccessManager->get(request);
 }
 
 
-void withdrawalwindow::getWithdrawal(QNetworkReply *reply) {
+void withdrawalwindow::getWithdrawalSlot(QNetworkReply *reply) {  //tehdään nosto, HTTP POST, ja proseduuri tekee tietokantaan tilitapahtuman taustalla
 
-    QString id = this->getCardAccess(reply);
+    QString id = this->getCardAccess(reply);  //tallennetaan korttiin liitetyn tilin numero muuttujaan
 
     reply->deleteLater();
     cardAccessManager->deleteLater();
@@ -88,14 +86,13 @@ void withdrawalwindow::getWithdrawal(QNetworkReply *reply) {
 }
 
 
-void withdrawalwindow::withdrawal_status(QNetworkReply* reply)
+void withdrawalwindow::withdrawal_status(QNetworkReply* reply)  //vastauksen perusteella annetaan käyttäjälle virheilmoitukset
 {
     QByteArray response_data=reply->readAll();
     QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
     QJsonObject status = json_doc.object();
-
+    qDebug() << status;   //tulostetaan POST-pyynnön vastauksen data
     QString text;
-    qDebug() << status;
 
     if (status["status"] != 200) {
         ui->lbl_withdrawal_status->setText("<font color='red'>No response from server</font>");
@@ -109,17 +106,13 @@ void withdrawalwindow::withdrawal_status(QNetworkReply* reply)
 }
 
 
-QString withdrawalwindow::getCardAccess(QNetworkReply *reply)
+QString withdrawalwindow::getCardAccess(QNetworkReply *reply) //tällä funktiolla palautetaan tilinumero getWithdrawalSlottiin
 {
-
-    QByteArray response=reply->readAll();        //Haetaan korttiin liitetyn tilin numero
+    QByteArray response=reply->readAll();
     QJsonDocument json_doc = QJsonDocument::fromJson(response);
     QJsonObject json_obj = json_doc.object();
-
     account_number=QString::number(json_obj["account_number"].toInt());
-
     qDebug()<<"This card has access to account: " +account_number;
-
     return account_number;
 }
 

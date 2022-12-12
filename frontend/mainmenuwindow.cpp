@@ -49,7 +49,7 @@ void Mainmenuwindow::on_btnCheckBalance_clicked()
 }
 
 
-void Mainmenuwindow::on_btnTransactions_clicked()  //Täällä haetaan tilitapahtumat, vastaus getTransactionsSlottiin
+void Mainmenuwindow::on_btnTransactions_clicked()  //Haetaan tilitapahtumat, vastaus getTransactionsSlottiin
 {    
     qDebug() << accountID;
     QString site_url="http://localhost:3000/tentransactions/" +accountID;
@@ -83,12 +83,12 @@ void Mainmenuwindow::getTransactionsSlot(QNetworkReply *reply) //Tänne tilitapa
             +",  "+QString::number(json_obj["Amount"].toInt())+",  "+(json_obj["Date"].toString())+"\r";
         }
 
-    ui->text_infobox->setText(transactions);
+    ui->text_infobox->setText(transactions);    //tulostetaan vastaus tekstiboksiin
     reply->deleteLater();
     transactionsManager->deleteLater();
 }
 
-void Mainmenuwindow::cardAndAccountSlot(QString accId, QString cardId)
+void Mainmenuwindow::cardAndAccountSlot(QString accId, QString cardId)  //tallennetaan tili-ja korttinumero tämän luokan muuttujiin
 {
     accountID = accId;
     cardID = cardId;

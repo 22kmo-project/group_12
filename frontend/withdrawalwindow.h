@@ -18,7 +18,6 @@ class withdrawalwindow : public QWidget
 public:
     explicit withdrawalwindow(QWidget *parent = nullptr);
     ~withdrawalwindow();
-
     QString cardNumber;
 
 private slots:
@@ -30,16 +29,13 @@ private slots:
     void on_btn500_clicked();
     void on_btnCloseWithdrawal_clicked();
     void on_btnAmountOK_clicked();
-
     void withdrawal_status(QNetworkReply *reply);
-    void getWithdrawal(QNetworkReply *reply);
+    void getWithdrawalSlot(QNetworkReply *reply);
 
 private:
     Ui::withdrawalwindow *ui;
     void withdrawal();
-
     QString getCardAccess(QNetworkReply *reply);
-
     QNetworkAccessManager *cardAccessManager;
     QNetworkReply *reply;
     QString account_number;

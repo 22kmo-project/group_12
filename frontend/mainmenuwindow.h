@@ -34,8 +34,8 @@ private slots:
     void on_btnLogOut_clicked();
 
     void getTransactionsSlot(QNetworkReply *reply); //tänne tulee vastaukset tilitapahtumista
+    void cardAndAccountSlot(QString, QString);      //vastauksena kortin ja tilin numerot main menuun
 
-    void cardAndAccountSlot(QString, QString);
 private:
     Ui::Mainmenuwindow *ui;
     QByteArray webToken;
