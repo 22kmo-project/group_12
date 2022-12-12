@@ -16,18 +16,36 @@
   <property name="windowTitle">
    <string>Main Menu</string>
   </property>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>80</y>
-     <width>571</width>
-     <height>381</height>
+     <x>91</x>
+     <y>81</y>
+     <width>631</width>
+     <height>341</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>25</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="1" rowspan="6">
-     <widget class="QTextEdit" name="text_infobox"/>
+     <widget class="QTextEdit" name="text_infobox">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
     <item row="1" column="0">
      <widget class="QPushButton" name="btnWithdrawal">
@@ -89,15 +107,6 @@
       </property>
       <property name="text">
        <string>Log out</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="font">
-       <font>
-        <pointsize>25</pointsize>
-       </font>
       </property>
      </widget>
     </item>

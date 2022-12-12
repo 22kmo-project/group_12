@@ -24,7 +24,7 @@ public:
     ~MainWindow();
 
 signals:
-    void korttinumero(QString);  //DELETE
+    void cardAndAccount(QString, QString);
 
 private slots:
     void on_btn_login_clicked();

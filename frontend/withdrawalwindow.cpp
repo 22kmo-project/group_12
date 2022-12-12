@@ -87,6 +87,7 @@ void withdrawalwindow::getWithdrawal(QNetworkReply *reply) {
     cardAccessManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
+
 void withdrawalwindow::withdrawal_status(QNetworkReply* reply)
 {
     QByteArray response_data=reply->readAll();
@@ -97,7 +98,7 @@ void withdrawalwindow::withdrawal_status(QNetworkReply* reply)
     qDebug() << status;
 
     if (status["status"] != 200) {
-        ui->lbl_withdrawal_status->setText("<font color='red'>Error</font>");
+        ui->lbl_withdrawal_status->setText("<font color='red'>No response from server</font>");
     }
     else if (status["result"].toObject()["affectedRows"] == 0) {
         ui->lbl_withdrawal_status->setText("<font color='red'>Insufficient funds</font>");
@@ -121,8 +122,6 @@ QString withdrawalwindow::getCardAccess(QNetworkReply *reply)
 
     return account_number;
 }
-
-
 
 
 void withdrawalwindow::on_btnCloseWithdrawal_clicked()

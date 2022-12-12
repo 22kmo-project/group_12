@@ -18,8 +18,8 @@ class Mainmenuwindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit Mainmenuwindow(QString card_number, QWidget *parent = nullptr);  //tuodaan card_number mainWindowista
-    Mainmenuwindow(QWidget *parent = nullptr);
+    explicit Mainmenuwindow(QWidget *parent = nullptr);  //tuodaan card_number mainWindowista
+
     ~Mainmenuwindow();
 
 //    const QString &getWebToken() const;
@@ -33,13 +33,14 @@ private slots:
     void on_btnTransactions_clicked();
     void on_btnLogOut_clicked();
 
-    void getTransactions(QNetworkReply *reply); //tänne tulee vastaukset tilitapahtumista
+    void getTransactionsSlot(QNetworkReply *reply); //tänne tulee vastaukset tilitapahtumista
 
-    void tilinumero(QString);
+    void cardAndAccountSlot(QString, QString);
 private:
     Ui::Mainmenuwindow *ui;
     QByteArray webToken;
     QString accountID;
+    QString cardID;
 
     QNetworkAccessManager *transactionsManager;
     QNetworkReply *reply;
