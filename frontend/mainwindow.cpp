@@ -94,13 +94,9 @@ void MainWindow::logOut()
 
 void MainWindow::moveToMenu()
 {
-
-    if(ui->stackedWidget->currentIndex() > 0){
-        timerReset();
-    }
-
     // Päänäkymään/menuun siirtyminen
     ui->stackedWidget->setCurrentIndex(1);
+    timerReset();
 }
 
 void MainWindow::moveToWithdrawal()
