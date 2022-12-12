@@ -12,36 +12,12 @@ withdrawalwindow::withdrawalwindow(QWidget *parent) :
 withdrawalwindow::~withdrawalwindow()
 {
     delete ui;
-
 }
 
 void withdrawalwindow::on_btn20_clicked()
 {
     ui->lbl_amount->setText("20");
     emit buttonPressed();
-}
-
-void withdrawalwindow::withdrawal_status(QNetworkReply* reply)
-{
-    QByteArray response_data=reply->readAll();
-    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
-    QJsonObject status = json_doc.object();
-
-    QString text;
-    qDebug() << status;
-
-    if (status["status"] != 200) {
-        ui->lbl_withdrawal_status->setText("<font color='red'>Error</font>");
-    }
-    else if (status["result"].toObject()["affectedRows"] == 0) {
-        ui->lbl_withdrawal_status->setText("<font color='red'>Insufficient funds</font>");
-    }
-    else {
-        ui->lbl_withdrawal_status->setText("<font color='green'>Withdrawal executed successfully</font>");
-        }
-    //ui->lbl_withdrawal_status->setText("<font color='red'>'text'</font>");
-    //ui->lbl_withdrawal_status->setText(text);
-
 }
 
 void withdrawalwindow::on_btn40_clicked()
@@ -83,19 +59,19 @@ void withdrawalwindow::on_btnAmountOK_clicked()
 
 void withdrawalwindow::withdrawal()
 {
-    QString site_url="http://localhost:3000/card_access/"+cardNumber;
+    QString site_url="http://localhost:3000/card_access/"+cardNumber;  //haetaan korttiin liitetyn tilin numero
     QNetworkRequest request((site_url));
     qDebug() << "Number of the card in use is: "+ cardNumber;
 
     cardAccessManager = new QNetworkAccessManager(this);
-    connect(cardAccessManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getWithdrawal(QNetworkReply*)));
+    connect(cardAccessManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(getWithdrawalSlot(QNetworkReply*)));
     reply = cardAccessManager->get(request);
 }
 
 
-void withdrawalwindow::getWithdrawal(QNetworkReply *reply) {
+void withdrawalwindow::getWithdrawalSlot(QNetworkReply *reply) {  //tehdään nosto, HTTP POST, ja proseduuri tekee tietokantaan tilitapahtuman taustalla
 
-    QString id = this->getCardAccessSlot(reply);
+    QString id = this->getCardAccess(reply);  //tallennetaan korttiin liitetyn tilin numero muuttujaan
 
     reply->deleteLater();
     cardAccessManager->deleteLater();
@@ -116,17 +92,35 @@ void withdrawalwindow::getWithdrawal(QNetworkReply *reply) {
     cardAccessManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
-QString withdrawalwindow::getCardAccessSlot(QNetworkReply *reply)
+
+void withdrawalwindow::withdrawal_status(QNetworkReply* reply)  //vastauksen perusteella annetaan käyttäjälle virheilmoitukset
 {
-    account_number=reply->readAll();        //Haetaan korttiin liitetyn tilin numero
-    QJsonDocument json_doc = QJsonDocument::fromJson(account_number);
-        QJsonObject json_obj = json_doc.object();
-        QString tili;
-        tili=QString::number(json_obj["account_number"].toInt());
+    QByteArray response_data=reply->readAll();
+    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    QJsonObject status = json_doc.object();
+    qDebug() << status;   //tulostetaan POST-pyynnön vastauksen data
+    QString text;
 
-        qDebug()<<"This card has access to account: " +tili;
+    if (status["status"] != 200) {
+        ui->lbl_withdrawal_status->setText("<font color='red'>No response from server</font>");
+    }
+    else if (status["result"].toObject()["affectedRows"] == 0) {
+        ui->lbl_withdrawal_status->setText("<font color='red'>Insufficient funds</font>");
+    }
+    else {
+        ui->lbl_withdrawal_status->setText("<font color='green'>Withdrawal executed successfully</font>");
+        }
+}
 
-        return tili;
+
+QString withdrawalwindow::getCardAccess(QNetworkReply *reply) //tällä funktiolla palautetaan tilinumero getWithdrawalSlottiin
+{
+    QByteArray response=reply->readAll();
+    QJsonDocument json_doc = QJsonDocument::fromJson(response);
+    QJsonObject json_obj = json_doc.object();
+    account_number=QString::number(json_obj["account_number"].toInt());
+    qDebug()<<"This card has access to account: " +account_number;
+    return account_number;
 }
 
 

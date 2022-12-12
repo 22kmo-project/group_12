@@ -1,7 +1,9 @@
 #ifndef MAINMENUWINDOW_H
 #define MAINMENUWINDOW_H
 
-#include "qbitarray.h"
+#include <QtNetwork>
+#include <QNetworkAccessManager>
+#include <QJsonDocument>
 
 
 #include <QWidget>
@@ -16,8 +18,8 @@ class Mainmenuwindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit Mainmenuwindow(QString card_number, QWidget *parent = nullptr);  //tuodaan card_number mainWindowista
-    Mainmenuwindow(QWidget *parent = nullptr);
+    explicit Mainmenuwindow(QWidget *parent = nullptr);  //tuodaan card_number mainWindowista
+
     ~Mainmenuwindow();
 
 //    const QString &getWebToken() const;
@@ -31,10 +33,18 @@ private slots:
     void on_btnTransactions_clicked();
     void on_btnLogOut_clicked();
 
+    void getTransactionsSlot(QNetworkReply *reply); //tänne tulee vastaukset tilitapahtumista
+    void cardAndAccountSlot(QString, QString);      //vastauksena kortin ja tilin numerot main menuun
+
 private:
     Ui::Mainmenuwindow *ui;
-
     QByteArray webToken;
+    QString accountID;
+    QString cardID;
+
+    QNetworkAccessManager *transactionsManager;
+    QNetworkReply *reply;
+    QByteArray response_data;
 
 signals:
     void logOutClicked();

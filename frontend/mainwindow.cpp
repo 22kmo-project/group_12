@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&objectWithdrawMenu, SIGNAL(closeClicked()), this, SLOT(moveToMenu()));
     connect(&objectTransferMenu, SIGNAL(closeClicked()), this, SLOT(moveToMenu()));
 
+
     // Ajastimet
     timer1 = new QTimer(this);
 
@@ -28,16 +29,15 @@ MainWindow::MainWindow(QWidget *parent)
     // Ajastimen resetointi kun jotain nappia painetaan
     connect(&objectWithdrawMenu, SIGNAL(buttonPressed()), this, SLOT(timerReset()));
     connect(&objectTransferMenu, SIGNAL(buttonPressed()), this, SLOT(timerReset()));
+
+    connect(this, SIGNAL(cardAndAccount(QString,QString)), &objectMainMenu, SLOT(cardAndAccountSlot(QString, QString)));
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 
-//    delete netManager;
-//    netManager = nullptr;
-//    delete reply;
-//    reply = nullptr;
 }
 
 
@@ -71,16 +71,16 @@ void MainWindow::loginSlot(QNetworkReply *reply)  //tämä käsittelee vastaukse
     qDebug() << test;
 
     if(test == -1 && response_data.length() > 0){
-        objectMainMenu.setWebToken(response_data);
+        getAccountId();
         moveToMenu();
         clearFields();
 
     }else if(test == 0){
         clearFields();
-        ui->label_infobox->setText("Tunnus ja salasana eivät täsmää");
+        ui->label_infobox->setText("<font color='red'>Wrong password or username</font");
     }
     else{
-        ui->label_infobox->setText("Palvelin ei vastaa");
+        ui->label_infobox->setText("<font color='red'>No response from server</font");
     }
 
 }
@@ -94,22 +94,21 @@ void MainWindow::logOut()
 
 void MainWindow::moveToMenu()
 {
+
     if(ui->stackedWidget->currentIndex() > 0){
         timerReset();
     }
+
     // Päänäkymään/menuun siirtyminen
     ui->stackedWidget->setCurrentIndex(1);
-
-
-
 }
 
 void MainWindow::moveToWithdrawal()
 {
+    objectWithdrawMenu.cardNumber = card_number; //viedään card_number withdraw-ikkunaan, public/private??
     objectWithdrawMenu.cardNumber = card_number; //viedään card_number withdraw-ikkunaan
     ui->stackedWidget->setCurrentIndex(3); // Withdrawal-ikkunaan siirtyminen
     timerReset();
-
 }
 
 void MainWindow::moveToTransferFunds()
@@ -139,6 +138,7 @@ void MainWindow::netRequest(QString siteurl)
     reply = netManager->get(request);
 }
 
+
 void MainWindow::timerReset()
 {
     if(ui->stackedWidget->currentIndex() == 1){
@@ -159,5 +159,33 @@ void MainWindow::timerTriggered()
     else if(ui->stackedWidget->currentIndex() == 1){
         logOut();
     }
+}
+
+
+void MainWindow::getAccountId()  //haetaan tilin numero Main Windowiin
+{
+    QString site_url="http://localhost:3000/card_access/"+card_number;
+    QNetworkRequest request((site_url));
+    qDebug() << "Number of the card in use is: "+ card_number;
+        netManager = new QNetworkAccessManager(this);
+    connect(netManager, SIGNAL(finished (QNetworkReply*)), this, SLOT(accountIdSlot(QNetworkReply*)));
+    reply = netManager->get(request);
+
+}
+
+void MainWindow::accountIdSlot(QNetworkReply *reply) //Tilinumerohaun vastaus tulee tänne
+{
+    QByteArray response=reply->readAll();        //Haetaan korttiin liitetyn tilin numero
+    QJsonDocument json_doc = QJsonDocument::fromJson(response);
+    QJsonObject json_obj = json_doc.object();
+
+    account_number=QString::number(json_obj["account_number"].toInt());
+
+    emit cardAndAccount(account_number, card_number);  //EI lähde korttinumero täältä?????????
+
+    qDebug()<<"ja MainWindowissa tilin numero on: " +account_number;
+
+    reply->deleteLater();
+    netManager->deleteLater();
 }
 
